@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="ace-jira-quick-comment-plugin"/>
+    <!-- add our web resources -->
+    <web-resource key="ace-jira-quick-comment-plugin-resources" name="ace-jira-quick-comment-pluginn Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <resource type="download" name="ace-jira-quick-comment-plugin.css" location="/css/ace-jira-quick-comment-plugin.css"/>
+        <resource type="download" name="ace-jira-quick-comment-plugin.js" location="/js/ace-jira-quick-comment-plugin.js"/>
+        <resource type="download" name="images/" location="/images"/>
+        <context>ace-jira-quick-comment-plugin</context>
+    </web-resource>
+
+    <web-item key="ace-quick-comment-webitem" section="operations-operations">
+        <description key="admin.issue.operations.quickcomment.desc">Quick Comment</description>
+        <link linkId="acequickcomment">/secure/AceQuickCommentDetails!default.jspa?key=$!issue.key</link>
+        <label key="issue.operations.quickcomment"/>
+        <tooltip key="admin.issue.operations.acequickcomment.desc"/>
+        <condition class="com.acedemand.jira.plugins.condition.JiraOperationCondition" />
+    </web-item>
+
+    <webwork1 key="acequickcommentaction"  name="Ace QuickComment Action" class="java.lang.Object">
+        <description></description>
+        <actions>
+            <action name="com.acedemand.jira.plugins.web.AceQuickCommentAction" alias="AceQuickCommentDetails">
+                <view name="success">/templates/com/acedemand/jira/plugins/acequickcomment/action/success.vm</view>
+                <view name="error">/templates/com/acedemand/jira/plugins/acequickcomment/action/error.vm</view>
+                <!--view name="details">/templates/com/acedemand/jira/plugins/acequickcomment/action/details.vm</view-->
+            </action>
+        </actions>
+    </webwork1>
+
+    <rest key="quickCommentRest" path="/quickcomment" version="1.0">
+        <description>Provides quickcomment services.</description>
+    </rest>
+
+</atlassian-plugin>

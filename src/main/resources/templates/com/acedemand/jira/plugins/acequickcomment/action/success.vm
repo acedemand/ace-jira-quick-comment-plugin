@@ -1,0 +1,35 @@
+$webResourceManager.requireResource("com.acedemand.plugins.ace-jira-quick-comment-plugin:ace-jira-quick-comment-plugin-resources")
+
+<form class="aui" action="AceQuickCommentDetails!comment.jspa" method="post">
+    <table>
+        <tr>
+            <td align="left" valign="top" bgcolor="#fffff0">
+                <select name="quickComment" id="quickComment">
+                    <option value="Empty">Select Answer</option>
+                    #foreach ($cv in $quickComments)
+                            <option value="$cv.name"
+                        #if ($cv.name.equals($quickcomment.name))
+                                    SELECTED
+                        #end
+                        <option>$cv.name
+                        </option>
+                    #end
+                </select>
+            </td>
+        </tr>
+
+        <tr bgcolor="#ffffff">
+            <td align="center" valign="top" bgcolor="#fffff0">
+                <textarea name="quickcomment" id="quickcomment" cols="100" rows="15"></textarea>
+            </td>
+        </tr>
+    </table>
+    <button type="submit" value="Save">Save</button>
+    <input type="hidden" value="" id="issueKey" name="issueKey">
+</form>
+<script>
+    setIssueKey('key');
+    AJS.$("#quickComment").on('change', function () {
+        findDescription(this.value,AJS.$('#quickcomment'));
+    });
+</script>
